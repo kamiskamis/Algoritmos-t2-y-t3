@@ -2,10 +2,11 @@ import os
 import random
 import string
 
-# Función para generar la matriz de insertar
+# Función para generar la matriz de insertar con el formato 26x1 (igual a la matriz de eliminar)
 def generar_matriz_insertar():
-    # Crear una matriz 1x26 llena de números aleatorios entre 1 y 10
-    return [[random.randint(1, 10) for j in range(26)]]
+    # Crear una matriz 26x1 llena de números aleatorios entre 1 y 10
+    return [[random.randint(1, 10)] for i in range(26)]
+
 
 # Función para generar la matriz de eliminar
 def generar_matriz_eliminar():

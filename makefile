@@ -1,30 +1,26 @@
-# Variables
-CC = g++              # El compilador C++
-CFLAGS = -std=c++17 -Wall -g   # Flags para el compilador
-LDFLAGS =              # Flags para el enlazador, si es necesario
+# Nombre del ejecutable final
+TARGET = programa
 
 # Archivos fuente
-SRC = main.cpp fuerza_bruta.cpp p_dinamica.cpp
-# Archivos objeto generados
-OBJ = $(SRC:.cpp=.o)
-# Nombre del archivo ejecutable
-EXEC = programa
+SRCS = main.cpp fuerza_bruta.cpp p_dinamica.cpp
 
-# Regla para compilar y enlazar el ejecutable
-all: $(EXEC)
+# Archivos de cabecera (para tenerlos listos en caso de que sea necesario)
+HEADERS = fuerza_bruta.h p_dinamica.h
 
-# Regla para generar el ejecutable
-$(EXEC): $(OBJ)
-	$(CC) $(OBJ) -o $(EXEC) $(LDFLAGS)
+# Compilador y flags
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall
 
-# Regla para compilar sin generar archivos nuevos (solo objetos)
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+# Regla para compilar el ejecutable
+$(TARGET): $(SRCS) $(HEADERS)
+	$(CXX) $(CXXFLAGS) $(SRCS) -o $(TARGET)
+
+# Limpiar los archivos generados (ejecutable)
+clean:
+	rm -f $(TARGET)
 
 # Regla para ejecutar el programa
-run: $(EXEC)
-	./$(EXEC)
+run: $(TARGET)
+	./$(TARGET)
 
-# Regla para limpiar (eliminar archivos generados)
-clean:
-	rm -f *.o $(EXEC)
+.PHONY: clean run

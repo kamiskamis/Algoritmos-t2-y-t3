@@ -1,48 +1,40 @@
 #include "p_dinamica.h"
-#include "costos_operaciones.h"
+#include <vector>
 #include <algorithm>
 
-int pdinamicamemo(const std::string& s1, const std::string& s2, int m, int n, std::vector<std::vector<int>>& memo) {
-    // Si ya tenemos la solución para esta subcadena, la devolvemos
-    if (memo[m][n] != -1) { 
-        return memo[m][n];  
-    }
+int calcular_dinamica(const std::string& s1, const std::string& s2,
+                      const std::vector<std::vector<int>>& cost_insert,
+                      const std::vector<std::vector<int>>& cost_delete,
+                      const std::vector<std::vector<int>>& cost_replace,
+                      const std::vector<std::vector<int>>& cost_transpose) {
+    int m = s1.size();
+    int n = s2.size();
 
-    // Caso base: si uno de los strings está vacío
-    if (m == 0) {
-        // Si s1 está vacío, debemos insertar los caracteres de s2
-        return n * costo_ins(s2[n-1]);
-    }
+    // Crear una tabla dp de m+1 x n+1 para almacenar los costos
+    std::vector<std::vector<int>> dp(m + 1, std::vector<int>(n + 1, 0));
 
-    if (n == 0) {
-        // Si s2 está vacío, debemos eliminar los caracteres de s1
-        return m * costo_del(s1[m-1]);
-    }
+    // Inicializar el primer renglón y la primera columna
+    for (int i = 1; i <= m; ++i) dp[i][0] = i * cost_delete[s1[i - 1] - 'a'][0]; // Eliminar de s1
+    for (int j = 1; j <= n; ++j) dp[0][j] = j * cost_insert[s2[j - 1] - 'a'][0]; // Insertar en s2
 
-    // Caso general: calcular el costo de sustitución
-    int costo = (s1[m - 1] == s2[n - 1]) ? 0 : costo_sub(s1[m - 1], s2[n - 1]);
+    // Llenar la tabla dp con los costos mínimos
+    for (int i = 1; i <= m; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            // Calcular el costo de sustitución
+            int costo_sub = (s1[i - 1] == s2[j - 1]) ? 0 : cost_replace[s1[i - 1] - 'a'][s2[j - 1] - 'a'];
 
-    // Recursión para insertar, eliminar o sustituir
-    int insertar = pdinamicamemo(s1, s2, m, n-1, memo) + costo_ins(s2[n-1]);
-    int eliminar = pdinamicamemo(s1, s2, m-1, n, memo) + costo_del(s1[m-1]);
-    int sustituir = pdinamicamemo(s1, s2, m-1, n-1, memo) + costo;
+            // Calcular el costo mínimo de las tres operaciones (eliminar, insertar, sustituir)
+            dp[i][j] = std::min({dp[i - 1][j] + cost_delete[s1[i - 1] - 'a'][0],   // Eliminar
+                                 dp[i][j - 1] + cost_insert[s2[j - 1] - 'a'][0],   // Insertar
+                                 dp[i - 1][j - 1] + costo_sub});                    // Sustituir
 
-    // Elegimos el mínimo entre las tres opciones
-    int resultado = std::min({insertar, eliminar, sustituir});
-
-    // Caso de transposición: solo si m > 1 y n > 1
-    if (m > 1 && n > 1) {
-        if (s1[m-1] == s2[n-2] && s1[m-2] == s2[n-1]) {
-            // Si los caracteres se pueden transponer, actualizamos el resultado
-            int transponer = pdinamicamemo(s1, s2, m-2, n-2, memo) + costo_trans(s1[m-1], s2[n-2]);
-            resultado = std::min(resultado, transponer);
+            // Verificar si se puede realizar una transposición
+            if (i > 1 && j > 1 && s1[i - 1] == s2[j - 2] && s1[i - 2] == s2[j - 1]) {
+                dp[i][j] = std::min(dp[i][j], dp[i - 2][j - 2] + cost_transpose[s1[i - 1] - 'a'][s2[j - 2] - 'a']);
+            }
         }
     }
 
-    // Guardamos el resultado en la tabla de memoria
-    memo[m][n] = resultado;
-
-    return resultado;
+    // El resultado final es el valor en dp[m][n]
+    return dp[m][n];
 }
-
-
