@@ -17,9 +17,10 @@ int fuerzabrutarecursiva(const std::string& s1, const std::string& s2, int m, in
 
     int resultado = std::min({insertar, eliminar, sustituir});
 
-    if (m>1 && n>1 && s1[m-1] == s2[n-2]&&s1[m-2 == s2[n-1]]){
-        int transponer = fuerzabrutarecursiva(s1, s2, m-2,n-2)+ costo_trans(s1[m-1], s2[n-2]);
-        resultado = std::min(resultado, transponer);
-    }
+    if (m > 1 && n > 1 && s1[m-1] == s2[n-2] && s1[m-2] == s2[n-1]) {
+    int transponer = fuerzabrutarecursiva(s1, s2, m-2, n-2) + costo_trans(s1[m-1], s2[n-2]);
+    resultado = std::min(resultado, transponer);
+}
+
     return resultado;
 }

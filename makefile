@@ -1,10 +1,10 @@
 # Variables
-CC = g++            # El compilador C++
-CFLAGS = -std=c++17 -Wall -g  # Flags para el compilador
-LDFLAGS =            # Flags para el enlazador, si es necesario
+CC = g++              # El compilador C++
+CFLAGS = -std=c++17 -Wall -g   # Flags para el compilador
+LDFLAGS =              # Flags para el enlazador, si es necesario
 
 # Archivos fuente
-SRC = main.cpp costos_operaciones.cpp fuerza_bruta.cpp p_dinamica.cpp
+SRC = main.cpp fuerza_bruta.cpp p_dinamica.cpp
 # Archivos objeto generados
 OBJ = $(SRC:.cpp=.o)
 # Nombre del archivo ejecutable
