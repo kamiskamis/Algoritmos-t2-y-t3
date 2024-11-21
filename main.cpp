@@ -47,16 +47,30 @@ int main() {
     auto cost_replace = leer_matriz("matrices_costos/cost_replace.txt");
     auto cost_transpose = leer_matriz("matrices_costos/cost_transpose.txt");
 
+    // Verificar que las matrices hayan sido cargadas correctamente
+    if (cost_insert.empty() || cost_delete.empty() || cost_replace.empty() || cost_transpose.empty()) {
+        std::cerr << "Error al leer las matrices de costos." << std::endl;
+        return 1;  // Salir si hubo un error en la lectura de matrices
+    }
+
     // Leer las cadenas de prueba
     auto [s1, s2] = leer_caso();
+
+    // Verificar que las cadenas hayan sido leídas correctamente
+    if (s1.empty() || s2.empty()) {
+        std::cerr << "Error al leer las cadenas de prueba." << std::endl;
+        return 1;  // Salir si hubo un error en la lectura de cadenas
+    }
 
     // Mostrar las cadenas
     std::cout << "Cadena 1: " << s1 << std::endl;
     std::cout << "Cadena 2: " << s2 << std::endl;
 
     // Calcular la distancia con fuerza bruta
+    int m = s1.size();
+    int n = s2.size();
     std::cout << "\nFuerza Bruta:" << std::endl;
-    int distancia_fb = calcular_fuerza_bruta(s1, s2, cost_insert, cost_delete, cost_replace, cost_transpose);
+    int distancia_fb = calcular_fuerza_bruta(s1, s2, m, n ,cost_insert, cost_delete, cost_replace, cost_transpose);
     std::cout << "Distancia de Damerau-Levenshtein (Fuerza Bruta): " << distancia_fb << std::endl;
 
     // Calcular la distancia con programación dinámica

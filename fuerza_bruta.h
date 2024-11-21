@@ -4,12 +4,12 @@
 #include <vector>
 #include <string>
 
-
-// Declaración de la función para calcular la distancia de Damerau-Levenshtein usando fuerza bruta
+// Declaración de la función calcular_fuerza_bruta
 int calcular_fuerza_bruta(const std::string& s1, const std::string& s2,
-                          const std::vector<std::vector<int>>& cost_insert,
-                          const std::vector<std::vector<int>>& cost_delete,
-                          const std::vector<std::vector<int>>& cost_replace,
-                          const std::vector<std::vector<int>>& cost_transpose);
+                           int n, int m,
+                           const std::vector<std::vector<int>>& cost_insert,
+                           const std::vector<std::vector<int>>& cost_delete,
+                           const std::vector<std::vector<int>>& cost_replace,
+                           const std::vector<std::vector<int>>& cost_transpose);
 
 #endif // FUERZA_BRUTA_H

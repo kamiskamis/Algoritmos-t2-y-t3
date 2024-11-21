@@ -4,7 +4,11 @@
 #include <vector>
 #include <string>
 
-// Función que calcula la distancia de Damerau-Levenshtein con programación dinámica
+// Función para obtener el índice del caracter
+// Asegura que el caracter esté entre 'a' y 'z'
+int obtener_indice(const char c);
+
+// Función para calcular la distancia mínima de Damerau-Levenshtein entre dos cadenas
 int calcular_dinamica(const std::string& s1, const std::string& s2,
                       const std::vector<std::vector<int>>& cost_insert,
                       const std::vector<std::vector<int>>& cost_delete,

@@ -41,8 +41,11 @@ def guardar_matriz_en_archivo(nombre_archivo, matriz, carpeta='matrices_costos')
     ruta_archivo = os.path.join(carpeta, nombre_archivo)
     try:
         with open(ruta_archivo, 'w') as f:
-            for fila in matriz:
-                f.write(' '.join(map(str, fila)) + '\n')
+            for i, fila in enumerate(matriz):
+                # Escribir fila sin salto de línea adicional al final
+                f.write(' '.join(map(str, fila)))
+                if i < len(matriz) - 1:  # Si no es la última fila
+                    f.write('\n')
         print(f"Archivo {nombre_archivo} guardado con éxito.")
     except Exception as e:
         print(f"Error al guardar el archivo {nombre_archivo}: {e}")
@@ -70,6 +73,10 @@ def limpiar_cadena(cadena):
     cadena = ''.join(filter(lambda ch: ch in string.printable, cadena))
     # Eliminar espacios en blanco al inicio y final
     cadena = cadena.strip()
+    
+    # Asegurarse de que no haya saltos de línea adicionales
+    cadena = cadena.rstrip('\n')  # Eliminar cualquier salto de línea al final
+
     return cadena
 
 
