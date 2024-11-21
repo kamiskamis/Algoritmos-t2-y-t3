@@ -11,8 +11,22 @@ int calcular_fuerza_bruta(const std::string& s1, const std::string& s2,
                            const std::vector<std::vector<int>>& cost_transpose) {
 
     // Caso base: si una de las cadenas es vacía
-    if (n == 0) return m * cost_insert[0][0];  // Necesitamos insertar todos los caracteres de s2
-    if (m == 0) return n * cost_delete[0][0];  // Necesitamos eliminar todos los caracteres de s1
+    if (n == 0) {
+        int costo = 0;
+        for (int i = 0; i < m; ++i) {
+            costo += cost_insert[0][s2[i] - 'a'];  // Insertar los caracteres de s2
+        }
+        return costo;
+    }
+
+    if (m == 0) {
+        int costo = 0;
+        for (int i = 0; i < n; ++i) {
+            costo += cost_delete[0][s1[i] - 'a'];  // Eliminar los caracteres de s1
+        }
+        return costo;
+    }
+
 
     // Si los caracteres son iguales, no hay costo, procedemos con las cadenas más pequeñas
     if (s1[n - 1] == s2[m - 1]) {

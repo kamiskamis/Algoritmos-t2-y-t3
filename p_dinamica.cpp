@@ -25,7 +25,7 @@ int calcular_dinamica(const std::string& s1, const std::string& s2,
     // Crear una tabla dp de m+1 x n+1 para almacenar los costos
     std::vector<std::vector<int>> dp(m + 1, std::vector<int>(n + 1, 0));
 
-    // Inicializar el primer renglón y la primera columna
+    // Casos base: si una de las cadenas está vacía
     for (int i = 1; i <= m; ++i) {
         dp[i][0] = i * cost_delete[obtener_indice(s1[i - 1])][0]; // Eliminar de s1
     }
