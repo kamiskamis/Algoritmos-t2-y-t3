@@ -2,33 +2,30 @@ import os
 import random
 import string
 
-# Función para generar la matriz de insertar con el formato 26x1 (igual a la matriz de eliminar)
+# Función para generar la matriz de insertar con un número repetido entre 1 y 9 (excepto la diagonal)
 def generar_matriz_insertar():
-    # Crear una matriz 26x1 llena de números aleatorios entre 1 y 10
-    return [[random.randint(1, 10)] for i in range(26)]
-
-
-# Función para generar la matriz de eliminar
-def generar_matriz_eliminar():
-    # Crear una matriz 26x1 llena de números aleatorios entre 1 y 10
-    return [[random.randint(1, 10)] for i in range(26)]
-
-# Función para generar la matriz de sustituir
-def generar_matriz_sustituir():
-    # Crear una matriz 26x26 llena de números aleatorios entre 1 y 10
-    matriz = [[random.randint(1, 10) for j in range(26)] for i in range(26)]
-    # Poner los valores de la diagonal principal a 0
-    for i in range(26):
-        matriz[i][i] = 0
+    numero = random.randint(1, 9)  # Número aleatorio para la matriz
+    # Crear una matriz 26x1, todo con el número repetido (excepto la diagonal)
+    matriz = [[numero] for _ in range(26)]
     return matriz
 
-# Función para generar la matriz de transponer
+# Función para generar la matriz de eliminar con un número repetido entre 1 y 9 (excepto la diagonal)
+def generar_matriz_eliminar():
+    numero = random.randint(1, 9)  # Número aleatorio para la matriz
+    # Crear una matriz 26x1, todo con el número repetido (excepto la diagonal)
+    matriz = [[numero] for _ in range(26)]
+    return matriz
+
+# Función para generar la matriz de sustituir con un número repetido entre 1 y 9 (excepto la diagonal)
+def generar_matriz_sustituir():
+    numero = random.randint(1, 9)  # Número aleatorio para la matriz
+    matriz = [[numero if i != j else 0 for j in range(26)] for i in range(26)]  # Rellenar la diagonal con 0
+    return matriz
+
+# Función para generar la matriz de transponer con un número repetido entre 1 y 9 (excepto la diagonal)
 def generar_matriz_transponer():
-    # Crear una matriz 26x26 llena de números aleatorios entre 1 y 10
-    matriz = [[random.randint(1, 10) for j in range(26)] for i in range(26)]
-    # Poner los valores de la diagonal principal a 0
-    for i in range(26):
-        matriz[i][i] = 0
+    numero = random.randint(1, 9)  # Número aleatorio para la matriz
+    matriz = [[numero if i != j else 0 for j in range(26)] for i in range(26)]  # Rellenar la diagonal con 0
     return matriz
 
 # Función para guardar las matrices generadas en archivos
@@ -63,7 +60,6 @@ guardar_matriz_en_archivo('cost_replace.txt', matriz_sustituir)
 guardar_matriz_en_archivo('cost_transpose.txt', matriz_transponer)
 
 print("Archivos generados con éxito en la carpeta 'matrices_costos'.")
-
 
 # Función para limpiar las cadenas
 def limpiar_cadena(cadena):
